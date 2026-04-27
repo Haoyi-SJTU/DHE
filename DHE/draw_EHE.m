@@ -1,15 +1,42 @@
-% Plot the EHE ellipses corresponding to all of the robot's joints.
-% The robot's 24 joints form 12 sets of joint spaces—for example, 
-% span{α1, β1}, span{α2, β2}, and so on. We have plotted the projection 
-% ellipses for EHE, totaling 12 in number. These ellipses are displayed in 
-% a stacked arrangement within the figure to conserve space.
+% =========================================================================
+% Function Name: draw_EHE
+% Description: Visualize EHE projection ellipses for all robot joints in an animated sequence
+% Purpose: Animate the evolution of disturbance resistance ellipsoids across all joint subspaces over time
 % 
-% input:
-%     kernal_series: The parameter matrix for the EHE ellipse. Please refer
-%                   to the paper for the specific definition.
-%     data_length: the length of the data
-% output:
-%     none
+% This function creates an animation showing the projection ellipses of the
+% EHE for 12 joint subspaces. Each ellipse represents the disturbance
+% resistance characteristics in a 2D joint space span{αi, βi}. The ellipses
+% are plotted in a stacked arrangement and animated over time to show
+% how disturbance characteristics evolve with robot configuration.
+%
+% Input Parameters:
+%   kernal_series - 3D array of EHE kernel matrices [n × n × data_length]
+%   data_length   - the length of the data
+% 
+% Output Parameters:
+%   None (function creates and updates a figure with animation)
+%
+% Visualization Details:
+%   - Creates a single figure with 12 overlaid ellipses
+%   - Each ellipse corresponds to a joint subspace span{αi, βi}
+%   - Ellipses are filled with distinct colors from 'color_list.mat'
+%   - Animation shows time evolution with 1ms pause between frames
+%   - Legend identifies each joint subspace
+%   - Equal axis scaling ensures proper ellipse aspect ratio
+%   - Grid overlay for reference
+%
+% Mathematical Formulation:
+%   For each joint subspace j (j = 1 to 12):
+%   x(θ) = cos(θ) / sqrt(K(2j-1, 2j-1))
+%   y(θ) = sin(θ) / sqrt(K(2j, 2j))
+%   where θ ∈ [0, 2π] and K is the kernel matrix
+%
+% See Also:
+%   draw_SHE, darw_save_EHE
+%
+% Author: Haoyi Song
+% Date: 2026-04-27
+% =========================================================================
 
 function draw_EHE(kernal_series,data_length)
 

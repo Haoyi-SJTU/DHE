@@ -23,6 +23,6 @@ while ~feof(fileID)
     i=i+1;
 end
 fclose(fileID);
-q_data(:,1) = [];
+q_data(:,25) = [];
 [q_data_length, dof] = size(q_data);
 end

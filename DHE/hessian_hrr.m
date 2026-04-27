@@ -10,10 +10,10 @@
 % output:
 %     H_i: the HRR's Hessian Matrix
 
-function H_i = hessian_hrr(T_i, T_e)
-H_i = zeros(25, 25, 6);
-for m = 1:25
-    for n = 1:25
+function H_i = hessian_hrr(T_i, T_e, dof)
+H_i = zeros(dof, dof, 6);
+for m = 1:dof
+    for n = 1:dof
         if m >=2 && n >=2
             if m <= n
                 H_i(m,n,1:3) = hessian_trans_up(T_i(:,:,m), T_i(:,:,n), T_e);%平移分量 sm*[sn*(P-Rn)]

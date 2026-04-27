@@ -15,7 +15,7 @@ function varargout=Jacobian(f,x, varargin)
         df = [df,df1];
     end
 %     J=matlabFunction(df);    
-    varargout{1}=df;                       % 输出为符号表达式
+    varargout{1}=df;                       %
 
 end
 
