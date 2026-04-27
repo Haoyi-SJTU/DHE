@@ -44,47 +44,6 @@
 %      - h1: lower half-length of universal joint
 %      - h2: upper half-length of universal joint
 %
-% Coordinate Frame Convention:
-%   The transformation assumes a specific coordinate frame assignment for
-%   universal joints. The -1 in R(3,2) suggests a coordinate system
-%   reflection or specific axis assignment.
-%
-% Example:
-%   % Calculate transformation for β-joint with 45-degree rotation
-%   alpha = deg2rad(30);  % Not used in this function
-%   beta = deg2rad(45);
-%   L = 0.1;    % 10cm link length
-%   h1 = 0.01;  % 1cm lower universal joint half-length
-%   h2 = 0.01;  % 1cm upper universal joint half-length
-%   
-%   T_beta = forward_kinematics_beta(alpha, beta, L, h1, h2);
-%   
-%   % Extract rotation and translation components
-%   R = T_beta(1:3, 1:3);
-%   p = T_beta(1:3, 4);
-%   
-%   fprintf('Rotation matrix:\n');
-%   disp(R);
-%   fprintf('Translation vector: [%.4f, %.4f, %.4f] m\n', p);
-%   fprintf('Translation distance: %.4f m\n', norm(p));
-%
-% Notes:
-%   1. The 'alpha' input parameter is not used in this function but is
-%      included for interface consistency with α-joint functions
-%   2. The translation distance (L+h1+h2) includes both link length and
-%      universal joint half-lengths
-%   3. Translation occurs in the rotated x-y plane (z-component is 0)
-%   4. The -1 in the rotation matrix (3,2) element indicates a specific
-%      axis convention that should be verified against the paper
-%   5. For complete forward kinematics, chain with α-joint transformations:
-%      T_total = T_alpha1 * T_beta1 * T_alpha2 * T_beta2 * ...
-%   6. The matrix is a proper rigid transformation (det(R)=1, R'R=I)
-%
-% Verification of Orthogonality:
-%   R = T_i(1:3, 1:3);
-%   isOrthogonal = all(abs(R'*R - eye(3)) < 1e-10, 'all');
-%   determinant = det(R);  % Should be approximately 1
-%
 % See Also:
 %   forward_kinematics_alpha, forward_kinematics
 %

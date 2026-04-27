@@ -1,19 +1,19 @@
-% Display the EHE ellipse area series using a bar chart, update it based on 
+% Display the DHE ellipse area series using a bar chart, update it based on 
 % the joint movement sequence, and save the chart as a video.
 % 
 % input:
-%     area_series: EHE ellipse area series
+%     area_series: DHE ellipse area series
 %     data_length: the length of the data
 % output:
 %     none
 
-function draw_save_EHEbar(area_series, data_length)
+function draw_save_DHEbar(area_series,data_length)
 
 load('sample_data/color_list.mat');
 
-
+area_series = area_series';
 fig = figure(1);
-writerObj = VideoWriter('EHE_ellipsoid_area_bar.avi');
+writerObj = VideoWriter('SHE_ellipsoid_area_bar.avi');
 open(writerObj);
 
 for i = 1:data_length
@@ -22,6 +22,7 @@ for i = 1:data_length
 
     for j = 1:12
         b = bar(j,temp_area_series(j),0.75,'stacked','edgecolor','none');  %0.75是柱形图的宽，可以更改
+
         xtips1 = b.XEndPoints;
         ytips1 = b.YEndPoints;
         labels1 = string(sprintf('%.2f', b.YData));

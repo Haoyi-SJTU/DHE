@@ -40,35 +40,78 @@
 % Date: 2026-04-27
 % =========================================================================
 
-function vel = single_q_velocity_gurobi(q_previous, q_now, delta_t, q_vel_previous)
-
-delta_q = q_now - q_previous;
-
-names = {'x', 'y', 'z', 'w'};
-model.varnames = names;
-model.modelsense = 'min';
-
-model.Q = sparse([0 0 0 0;
-    0 8*delta_t^2+1 4*delta_t^3 0 ;
-    0 4*delta_t^3 2*delta_t^4+8*delta_t^2 -8*delta_t;
-    0 0 -8*delta_t 8;]);
-model.obj = [0 -16*delta_t*delta_q-2*q_vel_previous -8*delta_q*delta_t^2 0];
-
-model.A = sparse([1 -1 0 -1; 0 0 delta_t -1]);
-model.rhs = [0 0];
-model.sense = '=';
-
-model.start = [delta_q/delta_t; q_vel_previous; (delta_q/delta_t-q_vel_previous)/delta_t; delta_q/delta_t-q_vel_previous];
-
-% gurobi_write(model, 'qp.lp');
-params.outputflag = 0;
-results = gurobi(model, params);
-
-% disp(results);
+% function vel = single_q_velocity_gurobi(q_previous, q_now, delta_t, q_vel_previous)
 % 
-% for v=1:length(names)
-%     fprintf('%s %e\n', names{v}, results.x(v));
+% delta_q = q_now - q_previous;
+% 
+% names = {'x', 'y', 'z', 'w'};
+% model.varnames = names;
+% model.modelsense = 'min';
+% 
+% model.Q = sparse([0 0 0 0;
+%     0 8*delta_t^2+1 4*delta_t^3 0 ;
+%     0 4*delta_t^3 2*delta_t^4+8*delta_t^2 -8*delta_t;
+%     0 0 -8*delta_t 8;]);
+% model.obj = [0 -16*delta_t*delta_q-2*q_vel_previous -8*delta_q*delta_t^2 0];
+% 
+% model.A = sparse([1 -1 0 -1; 0 0 delta_t -1]);
+% model.rhs = [0 0];
+% model.sense = '=';
+% 
+% model.start = [delta_q/delta_t; q_vel_previous; (delta_q/delta_t-q_vel_previous)/delta_t; delta_q/delta_t-q_vel_previous];
+% 
+% params.outputflag = 0;
+% results = gurobi(model, params);
+% 
+% vel = double(results.x(1));
+% 
 % end
-vel = double(results.x(1));
+
+function vel = single_q_velocity_gurobi(q_previous, q_now, delta_t, q_vel_previous)
+   
+    persistent model params is_initialized
+
+    
+    if isempty(is_initialized)
+        model.varnames = {'x', 'y', 'z', 'w'};
+        model.modelsense = 'min';
+        
+       
+        model.Q = sparse([0, 0, 0, 0;
+                          0, 8*delta_t^2+1, 4*delta_t^3, 0;
+                          0, 4*delta_t^3, 2*delta_t^4+8*delta_t^2, -8*delta_t;
+                          0, 0, -8*delta_t, 8]);
+                          
+        model.A = sparse([1, -1, 0, -1; 
+                          0, 0, delta_t, -1]);
+                          
+        model.rhs = [0; 0];
+        model.sense = '=';
+        
+        
+        params.outputflag = 0;
+        params.Presolve = 0; % 关闭预求解，极大地减少开销
+        params.Method = 1;   % 1=Dual Simplex，非常适合带 start 的微型问题
+        
+        is_initialized = true;
+    end
+
+    
+    delta_q = q_now - q_previous;
+    
+    model.obj = [0, -16*delta_t*delta_q - 2*q_vel_previous, -8*delta_q*delta_t^2, 0];
+    
+    
+    model.start = [delta_q/delta_t; 
+                   q_vel_previous; 
+                   (delta_q/delta_t - q_vel_previous)/delta_t; 
+                   delta_q/delta_t - q_vel_previous];
+
+    
+    results = gurobi(model, params);
+    
+   
+    vel = double(results.x(1));
 
 end
+

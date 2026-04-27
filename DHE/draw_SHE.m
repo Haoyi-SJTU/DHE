@@ -108,7 +108,7 @@ for i = 1:data_length
     lgd.Box = 'off';
 
     drawnow;
-    pause(0.1);
+    pause(0.001);
 end
 
 hold off;
