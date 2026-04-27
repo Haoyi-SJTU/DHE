@@ -97,12 +97,13 @@ DHE/
 
 ## 2. Requirements
 - **RAM**: > 8 GB
-- **MATLAB**: Version >= R2023a
+- **Required Software**:
+  - MATLAB: Version >= R2023a
+  - Gurobi Optimizer
 - **Required Toolboxes**:
   - MATLAB Robotics Toolbox
-- **Required Software**:
-  - Gurobi Optimizer
 
+  
 ## 3. Usage
 1. Run `main.m` as the entry point to observe the overall workflow.
 2. For test data, read from `sample_data/` (e.g., `read_q_file.m` can read `sample_jointdata.txt`).
