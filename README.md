@@ -1,5 +1,8 @@
 # DHE
 
+![MATLAB Version](https://img.shields.io/badge/MATLAB-R2023a%2B-orange)
+![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)
+
 ## 1. Overall Structure
 This folder (`DHE/`) contains MATLAB code, configuration files, and data files related to robotics (or dynamic analysis). The subfolder `sample_data/` stores sample data and configurations. The `.m` files in the root directory can be categorized by function into **main programs, kinematics calculation, velocity optimization, Hessian matrix processing, visualization, area calculation, auxiliary tools**, etc. The detailed structure and file functions are described below:
 
