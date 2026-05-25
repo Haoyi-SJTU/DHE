@@ -32,9 +32,15 @@ area_series = zeros(data_length,12);
 
 for i = 1:data_length
     for j = 1: 12
-        a = sqrt(1 / kernal_series(2*j-1,2*j-1,i));
-        b = sqrt(1 / kernal_series(2*j,2*j,i));
-        area_series(i,j) = pi * a * b;
+        A = kernal_series(2*j-1,2*j-1);
+        B = 2 * kernal_series(2*j-1,2*j);
+        C = kernal_series(2*j,2*j);
+        det_M = A * C - (B/2)^2;
+        if det_M > 0
+            area_series(i,j) = pi / sqrt(det_M);
+        else
+            error('This is not an ellipse equation (4AC - B² > 0).');
+        end
     end
 end
 
