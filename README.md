@@ -6,6 +6,8 @@
 
 A MATLAB toolbox for evaluating the **disturbance resistance** of hyper-redundant robots (HRRs) using a novel geometric metric — the **Disturbance Hyper-Ellipsoid**.
 
+![](https://github.com/Haoyi-SJTU/DHE/blob/main/figure/fig1.png)
+
 ## Overview
 
 Hyper-redundant robots (e.g., snake-like manipulators with 24+ DOF) exhibit varying resistance to external disturbances across different joint configurations. This project quantifies that resistance by projecting the high-dimensional disturbance mapping onto 2D joint subspaces, producing intuitive **ellipse visualizations** whose shape, orientation, and area reveal each joint pair's vulnerability.
@@ -143,10 +145,10 @@ DHE/
 - **RAM**: > 8 GB
 - **Required Software**:
   - MATLAB: Version >= R2023a
-  - Gurobi Optimizer
+  - Gurobi Optimizer: required for SHE/DHE (not needed for EHE alone)
 - **Required Toolboxes**:
-  - MATLAB Robotics Toolbox
-
+  - MATLAB Robotics Toolbox (recommended)
+  - Symbolic Math Toolbox
   
 ## Usage
 1. Run `main.m` as the entry point to observe the overall workflow.
@@ -156,7 +158,16 @@ DHE/
 ```
 
 2. For test data, read from `sample_data/` (e.g., `read_q_file.m` can read `sample_jointdata.txt`).
-3. Visualization functions (e.g., `draw_*.m`) will generate graphs, which can be analyzed in combination with area calculation functions (`cal_*.m`).
+```matlab
+% First-order only (no Gurobi needed)
+EHE('sample_data/sample_jointdata.txt')
+
+% Second-order (requires Gurobi)
+SHE('sample_data/sample_jointdata.txt')
+```
+
+3. Prepare Your Own Data. Provide a tab-separated text file with **24 joint angles per row** (radians), ordered as α₁, β₁, α₂, β₂, …, α₁₂, β₁₂. Each row represents one timestep.
+4. Visualization functions (e.g., `draw_*.m`) will generate graphs, which can be analyzed in combination with area calculation functions (`cal_*.m`).
 
 
 ## Output Examples
