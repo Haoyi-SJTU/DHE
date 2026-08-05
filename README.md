@@ -32,17 +32,15 @@ Three levels of fidelity are provided:
 If you use this code, please cite our paper:
 
 ```
-@ARTICLE{,
+@ARTICLE{
   author={Haoyi Song, Zhenpu Zhu, Zhanxuan Peng, Weichao Guo, Chao Liu, Yangmin Li and Xinjun Sheng},
   journal={International Journal of Control, Automation and Systems}, 
   title={Disturbance Hyper-ellipsoid: A Metric for Evaluating Disturbance Resistance of Hyper-redundant Robots}, 
   year={2026},
-  volume={},
-  pages={},
-  keywords={},
-  doi={}}
-
+  keywords={Hyper-redundant robot, Kinematics, Disturbance Performance evaluation},
+  doi={10.1007/s12555-026-00144-0}}
 ```
+
 Video for experiments: [Video Demonstration](https://youtu.be/LZfitKhQ1Bw)
 
 
